@@ -1,3 +1,6 @@
+/* eslint-disable no-unused-vars */
+import { combineReducers } from 'redux'
+
 const defaultState = {
   columns: [],
   selected: [
@@ -7,7 +10,50 @@ const defaultState = {
   ]
 }
 
+const secondaryState = {
+  rooms: [
+    {
+      id: 0,
+      number: '101',
+      events: [
+      ],
+      top: 0
+    },
+    {
+      id: 1,
+      number: '102',
+      events: [],
+      top: 0
+    },
+    {
+      id: 2,
+      number: '103-b',
+      events: [
+      ],
+      top: 0
+    },
+    {
+      id: 3,
+      number: '114',
+      events: [],
+      top: 0
+    }
+  ]
+}
+
 export default function mainReducer(state = defaultState, action) {
+  switch (action.type) {
+    case 'SET_SELECTED':
+      return {
+        ...state,
+        selected: action.payload
+      }
+    default:
+      return state
+  }
+}
+
+function secondaryReducer(state = defaultState, action) {
   switch (action.type) {
     case 'SET_SELECTED':
       return {

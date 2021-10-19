@@ -24,8 +24,16 @@ code {
 }
 td{
   min-width: 55px;
+  height:50px;
 }
 .btn-group button{
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
+}
+.event{
+  position: absolute;
+  height: 50px;
+  background-color: rgb(70, 167, 70);
+  border: 2px solid green;
+  border-radius: 15px
 }
