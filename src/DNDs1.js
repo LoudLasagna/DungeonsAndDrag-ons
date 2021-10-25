@@ -65,6 +65,7 @@ class DNDs1 extends Component {
 
     constructor(props) {
       super(props);
+      console.log(props);
       this.state = {
         savedSelected: props.selected,
         savedItems: props.columns,
@@ -239,7 +240,7 @@ class DNDs1 extends Component {
 }
 
 function mapStateToProps(state) {
-  const { selected, columns } = state
+  const { selected, columns } = state.mainReducer
   return { selected, columns }
 }
 

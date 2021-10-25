@@ -15,8 +15,8 @@ const data = [
 ];
 
 function DNDs1_Table() {
-  const selectedColumns = useSelector((state) => state.selected)
-
+  const selectedColumns = useSelector((state) => state.mainReducer.selected)
+  console.log(selectedColumns);
   const getSelectedData = () => {
     const tsc = selectedColumns.map((elem) => elem.alias);
     const temp = []
@@ -32,14 +32,14 @@ function DNDs1_Table() {
 
   return (
     <>
-      <ButtonGroup style={{ width: '100%' }}>
+      <ButtonGroup style={{ width: '100%' }} className="links">
         <Button variant="btn btn-primary" disabled>Задание 1</Button>
         <Link to="/2" as="Button" className="btn btn-secondary">
           Задание 2
         </Link>
       </ButtonGroup>
       <div className="main-wrapper">
-        <DNDs1 />
+        <DNDs1 columns={[]} />
         {
         selectedColumns.length === 0
           ? <h3>Не выбраны отображаемые поля, настройте таблицу</h3>
@@ -49,18 +49,18 @@ function DNDs1_Table() {
                 <tr>
                   <th>#</th>
                   {
-                selectedColumns.map((elem) => (
-                  <td key={elem.id}>
-                    {elem.title}
-                  </td>
-                ))
-              }
+                    selectedColumns.map((elem) => (
+                      <td key={elem.id}>
+                        {elem.title}
+                      </td>
+                    ))
+                  }
                 </tr>
               </thead>
               <tbody>
                 {
                 getSelectedData().map((element, index) => (
-                  <tr key={index}>
+                  <tr>
                     <td>{index + 1}</td>
                     {
                       selectedColumns.map((cElement) => (
