@@ -27,11 +27,11 @@ function Event(props) {
 
   const [roomIndex, setRoomIndex] = useState(props.obj.roomIndex)
   const [style, setStyle] = useState({
-    width: 70 * duration,
+    width: 80 * duration,
     backgroundColor: free ? 'yellow' : 'rgb(70, 167, 70)',
     borderColor: free ? 'rgb(160, 160, 9)' : 'green',
     cursor: free ? 'grab' : 'default',
-    padding: '0 10px',
+    padding: '0 7px',
     textAlign: 'center',
     wordWrap: 'break-word'
   })
@@ -142,16 +142,14 @@ function Event(props) {
 
 function DroppableTableCell(props) {
   const time = props.time;
-
   const rooms = useSelector((state) => state.secondaryReducer.rooms);
   const room = rooms.find((sRoom) => sRoom.id === props.room.id);
-
   const temp = room.events.find((elem) => elem.start === time);
   const contents = temp === undefined ? [] : [temp];
-
-  console.log(room, contents);
+  const [isDraggingOver, setDragState] = useState(false);
 
   const onDrop = () => {
+    setDragState(false);
     if (checkDroppability()) {
       draggedElement.start = time;
       const timeIndex = times.findIndex((element) => element === time);
@@ -164,16 +162,14 @@ function DroppableTableCell(props) {
   const checkDroppability = () => {
     let freeSpace = true;
 
-    const newTime = [];
+    let newTime = [];
     const occupiedRoomTime = [];
     const roomEvents = room.events.filter((elem) => elem.id !== draggedElement.id);
-
     const nti = times.findIndex((element) => element === time);
-    if (nti + draggedElement.duration > times.length - 1) freeSpace = false;
-    for (let j = nti; j < nti + draggedElement.duration; j += 1) {
-      newTime.push(times[j])
-    }
 
+    if (nti + draggedElement.duration > times.length - 1) freeSpace = false;
+
+    newTime = times.slice().splice(nti, draggedElement.duration);
     for (let i = 0; i < roomEvents.length; i += 1) {
       const oti = times.findIndex((element) => element === roomEvents[i].start);
       for (let j = oti; j < oti + roomEvents[i].duration; j += 1) {
@@ -181,22 +177,41 @@ function DroppableTableCell(props) {
       }
     }
 
-    occupiedRoomTime.forEach((ort) => {
-      newTime.forEach((nt) => {
-        if (ort === nt) {
-          freeSpace = false;
-        }
-      })
-    });
+    occupiedRoomTime.some((ort) => newTime.some((nt) => {
+      if (ort === nt) {
+        freeSpace = false;
+        return true
+      }
+      return false
+    }));
 
     return freeSpace
   }
 
+  const onDragOver = (event) => {
+    event.preventDefault()
+    if (draggedElement.id) {
+      setDragState(true);
+    }
+  }
+  const onDragLeave = () => {
+    if (draggedElement.id) {
+      setDragState(false);
+    }
+  }
+
+  const getCellStyle = (ido) => ({
+    backgroundColor: ido ? 'lightgrey' : '',
+    padding: 0,
+    maxHeight: 80
+  })
+
   return (
     <td
-      onDragOver={(event) => event.preventDefault()}
+      onDragOver={onDragOver}
       onDrop={onDrop}
-      style={{ padding: 0 }}
+      onDragLeave={onDragLeave}
+      style={getCellStyle(isDraggingOver)}
     >
       {
       contents.length > 0

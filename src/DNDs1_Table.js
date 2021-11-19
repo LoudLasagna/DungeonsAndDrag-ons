@@ -37,6 +37,9 @@ function DNDs1_Table() {
         <Link to="/2" as="Button" className="btn btn-secondary">
           Задание 2
         </Link>
+        <Link to="/2l" as="Button" className="btn btn-secondary">
+          Задание 2 с beatiful dnd
+        </Link>
       </ButtonGroup>
       <div className="main-wrapper">
         <DNDs1 columns={[]} />

@@ -22,12 +22,15 @@ function DNDs2_Table() {
           Задание 1
         </Link>
         <Button variant="btn btn-primary" disabled>Задание 2</Button>
+        <Link to="/2l" as="Button" className="btn btn-secondary">
+          Задание 2 с beatiful dnd
+        </Link>
       </ButtonGroup>
       <br />
       <div className="main-wrapper">
         <EventsCreator />
-        <div style={{ overflowX: 'scroll', border: '1px solid lightgrey' }}>
-          <Table striped bordered style={{ marginBottom: 0 }}>
+        <div style={{ overflowX: 'auto', border: '1px solid lightgrey' }}>
+          <Table striped bordered style={{ marginBottom: 0, maxWidth: 1 }}>
             <thead>
               <tr>
                 <td style={{ minWidth: 105 }}> Аудитория </td>

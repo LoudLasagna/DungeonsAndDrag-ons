@@ -29,6 +29,15 @@ const secondaryState = {
           start: '13:30',
           end: '14:00',
           duration: 1
+        },
+        {
+          duration: 1,
+          end: '8:30',
+          free: true,
+          id: 5,
+          name: '',
+          roomIndex: 0,
+          start: '8:00'
         }
       ],
       top: 0
